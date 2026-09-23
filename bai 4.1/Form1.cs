@@ -19,7 +19,6 @@ namespace bai_4._1
 
         private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
         {
-            // Tick => show password, Untick => hide
             txtPassword.UseSystemPasswordChar = !chkShowPassword.Checked;
         }
 
@@ -30,15 +29,12 @@ namespace bai_4._1
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            // Trigger validation for children
             if (this.ValidateChildren())
             {
-                // For demo purposes, consider login successful when fields are non-empty
                 MessageBox.Show("Login successful", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                // Focus the first control with an error
                 if (!string.IsNullOrWhiteSpace(errorProvider.GetError(txtUsername)))
                     txtUsername.Focus();
                 else if (!string.IsNullOrWhiteSpace(errorProvider.GetError(txtPassword)))
