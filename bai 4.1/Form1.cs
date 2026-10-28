@@ -15,6 +15,12 @@ namespace bai_4._1
         public Form1()
         {
             InitializeComponent();
+            try { Database.Init(); }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Không kết nối được CSDL:\n" + ex.Message,
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void chkShowPassword_CheckedChanged(object sender, EventArgs e)
@@ -31,7 +37,17 @@ namespace bai_4._1
         {
             if (this.ValidateChildren())
             {
-                MessageBox.Show("Login successful", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (AuthService.Login(txtUsername.Text.Trim(), txtPassword.Text))
+                {
+                    MessageBox.Show("Login successful", "Info",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    errorProvider.SetError(txtPassword, "Wrong username or password.");
+                    txtPassword.Focus();
+                    txtPassword.SelectAll();
+                }
             }
             else
             {
